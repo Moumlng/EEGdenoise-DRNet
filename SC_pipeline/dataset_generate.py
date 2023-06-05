@@ -103,11 +103,10 @@ Train_target, Train_noise, Val_target, Val_noise, Test_target, Test_noise=dataGe
 ##########################################
 
 # Save Datasets
-'''
+
 np.save(f'data/Train_{artifact}_target.npy', Train_target)
 np.save(f'data/Train_{artifact}_noise.npy', Train_noise)
 np.save(f'data/Val_{artifact}_target.npy', Val_target)
 np.save(f'data/Val_{artifact}_noise.npy', Val_noise)
 np.save(f'data/Test_{artifact}_target.npy', Test_target)
 np.save(f'data/Test_{artifact}_noise.npy', Test_noise)
-'''
