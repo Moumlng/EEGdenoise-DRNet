@@ -110,3 +110,7 @@ np.save(f'data/Val_{artifact}_target.npy', Val_target)
 np.save(f'data/Val_{artifact}_noise.npy', Val_noise)
 np.save(f'data/Test_{artifact}_target.npy', Test_target)
 np.save(f'data/Test_{artifact}_noise.npy', Test_noise)
+
+mkdir('data/input')
+mkdir('data/SC_output/csv')
+mkdir('data/SC_output/mat')
