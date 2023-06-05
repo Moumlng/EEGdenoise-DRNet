@@ -1,0 +1,3 @@
+[submodule "EEGdenoiseNet"]
+	path = EEGdenoiseNet
+	url = https://github.com/ncclabsustech/EEGdenoiseNet.git
