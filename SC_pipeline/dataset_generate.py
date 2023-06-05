@@ -13,9 +13,9 @@ SNR_max = 2
 artifact = 'EMG' # 'EOG' or 'EMG'
 ################
 
-EEG=np.load('data\EEG_all_epochs.npy')
-EMG=np.load('data\EMG_all_epochs.npy')
-EOG=np.load('data\EOG_all_epochs.npy')
+EEG=np.load('SC_pipeline/data/EEG_all_epochs.npy')
+EMG=np.load('SC_pipeline/data/EMG_all_epochs.npy')
+EOG=np.load('SC_pipeline/data/EOG_all_epochs.npy')
 
 print('EEG Shape:',EEG.shape)
 print('EMG Shape:',EMG.shape)
@@ -104,13 +104,13 @@ Train_target, Train_noise, Val_target, Val_noise, Test_target, Test_noise=dataGe
 
 # Save Datasets
 
-np.save(f'data/Train_{artifact}_target.npy', Train_target)
-np.save(f'data/Train_{artifact}_noise.npy', Train_noise)
-np.save(f'data/Val_{artifact}_target.npy', Val_target)
-np.save(f'data/Val_{artifact}_noise.npy', Val_noise)
-np.save(f'data/Test_{artifact}_target.npy', Test_target)
-np.save(f'data/Test_{artifact}_noise.npy', Test_noise)
+np.save(f'SC_pipeline/data/Train_{artifact}_target.npy', Train_target)
+np.save(f'SC_pipeline/data/Train_{artifact}_noise.npy', Train_noise)
+np.save(f'SC_pipeline/data/Val_{artifact}_target.npy', Val_target)
+np.save(f'SC_pipeline/data/Val_{artifact}_noise.npy', Val_noise)
+np.save(f'SC_pipeline/data/Test_{artifact}_target.npy', Test_target)
+np.save(f'SC_pipeline/data/Test_{artifact}_noise.npy', Test_noise)
 
-mkdir('data/input')
-mkdir('data/SC_output/csv')
-mkdir('data/SC_output/mat')
+mkdir('SC_pipeline/data/input')
+mkdir('SC_pipeline/data/output/csv')
+mkdir('SC_pipeline/data/output/mat')

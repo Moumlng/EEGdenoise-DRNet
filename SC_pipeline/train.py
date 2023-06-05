@@ -33,10 +33,10 @@ args = parser.parse_args()
 
 ########################
 
-train_target = np.load(f'data/Train_{args.artifact}_target.npy')
-train_noise = np.load(f'data/Train_{args.artifact}_noise.npy')
-val_target = np.load(f'data/Val_{args.artifact}_target.npy')
-val_noise = np.load(f'data/Val_{args.artifact}_noise.npy')
+train_target = np.load(f'SC_pipeline/data/Train_{args.artifact}_target.npy')
+train_noise = np.load(f'SC_pipeline/data/Train_{args.artifact}_noise.npy')
+val_target = np.load(f'SC_pipeline/data/Val_{args.artifact}_target.npy')
+val_noise = np.load(f'SC_pipeline/data/Val_{args.artifact}_noise.npy')
 
 train_target = torch.from_numpy(train_target)
 train_noise = torch.from_numpy(train_noise)
