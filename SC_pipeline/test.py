@@ -35,8 +35,8 @@ if args.model_name == 'DRNet':
 
 #######################
 
-test_target = np.load(f'SC_pipeline/data/Test_{args.artifact}_target.npy')
-test_noise = np.load(f'SC_pipeline/data/Test_{args.artifact}_noise.npy')
+test_target = np.load(f'data/Test_{args.artifact}_target.npy')
+test_noise = np.load(f'data/Test_{args.artifact}_noise.npy')
 
 #Choose a number to plot
 if args.index == None:
@@ -117,8 +117,8 @@ plot_numpy_set(Input, Target, Output, test_index)
 
 '''
 outputs = np.array(outputs)
-np.savetxt(f'data/output/test_{args.artifact}_{args.model_name}_{args.ckp}_output.csv', outputs, delimiter = ',')
-scipy.io.savemat(f'data/output/test_{args.artifact}_{args.model_name}_{args.ckp}.mat',{'input':(test_target + test_noise), 'target':test_target, 'output':outputs})
+np.savetxt(f'data/SC_output/csv/test_{args.artifact}_{args.model_name}_{args.ckp}_output.csv', outputs, delimiter = ',')
+scipy.io.savemat(f'data/SC_output/mat/test_{args.artifact}_{args.model_name}_{args.ckp}.mat',{'input':(test_target + test_noise), 'target':test_target, 'output':outputs})
 '''
 
 #plt_spec_set(Input, Target, Output)

@@ -43,7 +43,7 @@ def inference(input, device, model, model_name, model_ckp):
     
 
 startTime = time.perf_counter()
-Input_raw = np.loadtxt(f'SC_pipeline/data/input/{args.input_name}.csv', delimiter = ',')
+Input_raw = np.loadtxt(f'data/input/{args.input_name}.csv', delimiter = ',')
 
 if (len(Input_raw.shape)) == 1:
     Input_raw = np.expand_dims(Input_raw, dim = 0)
@@ -64,5 +64,8 @@ TimeCost = (endTime-startTime)
 print(f'Time Cost: {TimeCost}s.')
 
 if args.output_name != None:
-    np.savetxt(f'SC_pipeline/data/output/csv/run_{args.output_name}.csv', Output, delimiter=',')
-    scipy.io.savemat(f'SC_pipeline/data/output/mat/run_{args.output_name}.mat',{'input':Input_raw, 'output': Output})
+    
+    mkdir('data/SC_output/csv')
+    mkdir('data/SC_output/mat')
+    np.savetxt(f'data/SC_output/csv/run_{args.output_name}.csv', Output, delimiter=',')
+    scipy.io.savemat(f'data/SC_output/mat/run_{args.output_name}.mat',{'input':Input_raw, 'output': Output})
