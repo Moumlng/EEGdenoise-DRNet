@@ -10,7 +10,7 @@ Val_num = 5000
 Test_num = 5000
 SNR_min = -2
 SNR_max = 2
-artifact = EMG # 'EOG' or 'EMG'
+artifact = 'EMG' # 'EOG' or 'EMG'
 ################
 
 EEG=np.load('SC_pipeline/data/EEG_all_epochs.npy')
