@@ -74,7 +74,7 @@ def model_test(model, model_name, test_loader, criterion, device, input_type, mo
             elif input_type == 'clean':
                 test_input = test_target
             else:
-                raise SystemExit('input_type should be noised or clean')
+                raise SystemExit('Args Error: input_type should be noised or clean')
             
             test_input = (test_input).float().to(device)
             test_target = (test_target).float().to(device)
