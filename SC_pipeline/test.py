@@ -9,7 +9,6 @@ from scipy.fft import rfft, rfftfreq
 
 from utils import *
 from network.DRNet import DRNet
-import random
 
 ####### Parameter #######
 
@@ -21,7 +20,7 @@ threshold = 0.5
 
 #######################
 
-parser = argparse.ArgumentParser(description='Some parameters for the model')
+parser = argparse.ArgumentParser(description='Some parameters for test')
 
 parser.add_argument('-ckp', '--ckp', type=str, default = 'EMG100')
 parser.add_argument('-art', '--artifact', type=str, default='EMG', help='\'EMG\' or \'EOG\' test.')

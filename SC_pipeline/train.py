@@ -3,7 +3,6 @@ import torch.utils.data as Data
 import torch.optim as optim
 import torch.nn as nn
 import numpy as np
-import random
 import matplotlib.pyplot as plt
 import os
 import argparse

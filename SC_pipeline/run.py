@@ -8,7 +8,6 @@ import time
 
 from utils import *
 from network.DRNet import DRNet
-import random
 
 ####### Parameter #######
 
