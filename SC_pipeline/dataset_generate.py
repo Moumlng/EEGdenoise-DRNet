@@ -32,7 +32,6 @@ elif artifact == 'EOG':
 plt.figure(0)
 
 x = np.linspace(0,2,512)
-print(x)
 
 plt.subplot(3,1,1)
 plt.plot(x,EEG[0])
