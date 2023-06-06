@@ -51,8 +51,6 @@ plt.xlabel('time/s')
 plt.ylabel('amp')
 plt.legend(['EOG'], loc = 'upper right')
 
-plt.show()
-
 ################################
 
 def IOset(EEG, ART, num, SNRmin, SNRmax):
@@ -113,3 +111,5 @@ np.save(f'SC_pipeline/data/Test_{artifact}_noise.npy', Test_noise)
 mkdir('SC_pipeline/data/input')
 mkdir('SC_pipeline/data/output/csv')
 mkdir('SC_pipeline/data/output/mat')
+
+plt.show()
