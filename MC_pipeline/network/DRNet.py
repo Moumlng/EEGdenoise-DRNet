@@ -6,11 +6,11 @@ class DRNet(nn.Module):
     def __init__(self, in_channels = 60):
         super(DRNet, self).__init__()
         
-        self.encoder = BasicNet(In_Channels = in_channels)
-        self.decoder = BasicNet(In_Channels = in_channels)
+        self.decomposer = BasicNet(In_Channels = in_channels)
+        self.reconstructor = BasicNet(In_Channels = in_channels)
         
-        self.encoder_emb = nn.Conv1d(in_channels = 32, out_channels = in_channels, kernel_size = 1)
-        self.decoder_squeeze = nn.Conv1d(in_channels = 32, out_channels = in_channels, kernel_size = 1)
+        self.decomposer_emb = nn.Conv1d(in_channels = 32, out_channels = in_channels, kernel_size = 1)
+        self.reconstructor_squeeze = nn.Conv1d(in_channels = 32, out_channels = in_channels, kernel_size = 1)
         self.time_labeler_squeeze = nn.Conv1d(in_channels = in_channels, out_channels = in_channels, kernel_size = 15, padding = 7)
         self.Sigmoid = nn.Sigmoid()
         
@@ -21,9 +21,9 @@ class DRNet(nn.Module):
         std = torch.std(x)
         x = torch.div(x, std)
         
-        embedding_x = self.encoder_emb(self.encoder(x))
+        embedding_x = self.decomposer_emb(self.decomposer(x))
         
-        out = self.decoder_squeeze(self.decoder(embedding_x))
+        out = self.reconstructor_squeeze(self.reconstructor(embedding_x))
         
         time_weight = self.Sigmoid(self.time_labeler_squeeze(embedding_x))
         out = torch.mul(x, time_weight) + torch.mul(out, 1 - time_weight)
@@ -113,18 +113,18 @@ class BasicNet(nn.Module):
     def __init__(self, In_Channels = 1):
         super(BasicNet, self).__init__()
         
-        self.SEIB1 = InceptionBlock(in_channels = In_Channels)
-        self.SEIB2 = InceptionBlock(in_channels = In_Channels)
-        self.SEIB3 = InceptionBlock(in_channels = In_Channels)
+        self.IB1 = InceptionBlock(in_channels = In_Channels)
+        self.IB2 = InceptionBlock(in_channels = In_Channels)
+        self.IB3 = InceptionBlock(in_channels = In_Channels)
         self.SEIB4 = SE_InceptionBlock(in_channels = In_Channels)
         
         #self.squeeze = nn.Conv1d(in_channels = 20, out_channels = 1, kernel_size = 1)
         
     def forward(self, x):
         
-        x_1 = self.SEIB1(x)
-        x_2 = self.SEIB2(x_1)
-        x_3 = self.SEIB3(x_2)
+        x_1 = self.IB1(x)
+        x_2 = self.IB2(x_1)
+        x_3 = self.IB3(x_2)
         x_4 = self.SEIB4(x_3 + x_1)
         
         #y = self.squeeze(x_4)

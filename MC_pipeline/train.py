@@ -139,6 +139,9 @@ def model_train(model, model_name, train_loader, val_loader, optimizer, criterio
     
     plt.show()
 
+mkdir('MC_pipeline/data/input')
+mkdir('MC_pipeline/data/output/csv')
+mkdir('MC_pipeline/data/output/mat')
 model_train(model, args.model_name, train_loader, val_loader,
             optimizer, loss, device, args.epochs,
             args.ckp)
