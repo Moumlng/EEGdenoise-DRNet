@@ -14,7 +14,6 @@ from network.DRNet import DRNet
 
 print('Device: CUDA' if torch.cuda.is_available() else 'Device: cpu')
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-loss = nn.MSELoss()
 BatchSize = 1
 threshold = 0.5
 
@@ -56,11 +55,10 @@ test_loader = Data.DataLoader(
     shuffle = False
 )
 
-def model_test(model, model_name, test_loader, criterion, device, input_type, model_ckp = None):
+def model_test(model, model_name, test_loader, device, input_type, model_ckp = None):
     
     model.load_state_dict(torch.load(f'SC_pipeline/{model_name}/{model_ckp}.pkl'))
     model.eval().to(device)
-    test_total_loss = []
     output_RRMSE = []
     output_CC = []
     outputs = []
@@ -80,26 +78,20 @@ def model_test(model, model_name, test_loader, criterion, device, input_type, mo
             test_target = (test_target).float().to(device)
             
             test_output = model(test_input)
-            test_loss = criterion(test_output, test_target)
             
             outputs.append((test_output).squeeze(0).cpu().detach().numpy().astype('double'))
             
-            test_total_loss.append(test_loss.item())
             output_RRMSE.append(RRMSE(test_input.cpu().detach().numpy(), test_target.cpu().detach().numpy()))
             output_CC.append(np.corrcoef(test_input.cpu().detach().numpy(), test_target.cpu().detach().numpy())[0,1])
             
-    test_total_loss = np.array(test_total_loss)
     output_RRMSE = np.array(output_RRMSE)
     output_CC = np.array(output_CC)
     
-    test_epoch_loss_mean = round(np.mean(test_total_loss), 3)
-    test_epoch_loss_std = round(np.std(test_total_loss), 3)
     output_RRMSE_mean = round(np.mean(output_RRMSE), 3)
     output_RRMSE_std = round(np.std(output_RRMSE), 3)
     output_CC_mean = round(np.mean(output_CC), 3)
     output_CC_std = round(np.std(output_CC), 3)
     
-    print(f'Model test loss: {test_epoch_loss_mean}±{test_epoch_loss_std}')
     print(f'Output RRMSE: {output_RRMSE_mean}±{output_RRMSE_std}')
     print(f'Output CC: {output_CC_mean}±{output_CC_std}')
     
@@ -112,7 +104,7 @@ Input = Target + Noise
 model.load_state_dict(torch.load(f'SC_pipeline/{args.model_name}/{args.ckp}.pkl'))
 Output1 = model(torch.from_numpy(Input).float().unsqueeze(0))
 
-outputs = model_test(model, args.model_name, test_loader, loss, device, args.input, args.ckp)  
+outputs = model_test(model, args.model_name, test_loader, device, args.input, args.ckp)  
 Output = Output1.squeeze(0).cpu().detach().numpy()
 plot_numpy_set(Input, Target, Output, test_index)
 
