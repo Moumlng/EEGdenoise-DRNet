@@ -27,7 +27,6 @@ parser.add_argument('-ckp', '--ckp', type=str, default =None)
 parser.add_argument('-art', '--artifact', type=str, default ='EMG')
 parser.add_argument('-model', '--model_name', type=str, default ='DRNet')
 parser.add_argument('-epoch', '--epochs', type=int, default = 100)
-parser.add_argument('-train', '--train', type=str, default = 'mix')
 
 args = parser.parse_args()
 

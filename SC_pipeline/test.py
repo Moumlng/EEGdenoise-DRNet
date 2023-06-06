@@ -24,7 +24,8 @@ threshold = 0.5
 parser = argparse.ArgumentParser(description='Some parameters for the model')
 
 parser.add_argument('-ckp', '--ckp', type=str, default = 'EMG100')
-parser.add_argument('-art', '--artifact', type=str, default='EMG')
+parser.add_argument('-art', '--artifact', type=str, default='EMG', help='\'EMG\' or \'EOG\' test.')
+parser.add_argument('-input', '--input', type=str, default='noised', help='\'noised\' or \'clean\' EEG data for the model Input.')
 parser.add_argument('-model', '--model_name', type=str, default='DRNet')
 parser.add_argument('-index', '--index', type=int, default=None)
 
@@ -56,7 +57,7 @@ test_loader = Data.DataLoader(
     shuffle = False
 )
 
-def model_test(model, model_name, test_loader, criterion, device, model_ckp = None):
+def model_test(model, model_name, test_loader, criterion, device, input_type, model_ckp = None):
     
     model.load_state_dict(torch.load(f'SC_pipeline/{model_name}/{model_ckp}.pkl'))
     model.eval().to(device)
@@ -69,10 +70,12 @@ def model_test(model, model_name, test_loader, criterion, device, model_ckp = No
     with torch.no_grad():
         for step, (test_target, test_noise) in enumerate(test_loader):
             
-            if step % 2:
+            if input_type == 'noised':
                 test_input = test_target + test_noise
-            else:
+            elif input_type == 'clean':
                 test_input = test_target
+            else:
+                raise SystemExit('input_type should be noised or clean')
             
             test_input = (test_input).float().to(device)
             test_target = (test_target).float().to(device)
@@ -110,7 +113,7 @@ Input = Target + Noise
 model.load_state_dict(torch.load(f'SC_pipeline/{args.model_name}/{args.ckp}.pkl'))
 Output1 = model(torch.from_numpy(Input).float().unsqueeze(0))
 
-outputs = model_test(model, args.model_name, test_loader, loss, device, args.ckp)  
+outputs = model_test(model, args.model_name, test_loader, loss, device, args.input, args.ckp)  
 Output = Output1.squeeze(0).cpu().detach().numpy()
 plot_numpy_set(Input, Target, Output, test_index)
 
